@@ -76,8 +76,10 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidProfileComponent>(target) || HasComp<RevenantComponent>(target))
+        // Moffstation - Start - Revenant Revamp
+        if (!HasComp<MobStateComponent>(target) || HasComp<RevenantComponent>(target))
             return;
+        // Moffstation - End - Revenant Revamp
 
         args.Handled = true;
         if (!TryComp<EssenceComponent>(target, out var essence) || !essence.SearchComplete)

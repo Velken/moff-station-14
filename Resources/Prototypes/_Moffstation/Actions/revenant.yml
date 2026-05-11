@@ -1,0 +1,51 @@
+- type: entity
+  parent: BaseAction
+  id: ActionRevenantChooseCurseForm
+  name: Choose Curse
+  description: Choose a curse form.
+  components:
+  - type: Action
+    icon:
+      sprite: _Moffstation/Actions/revenant.rsi
+      state: curse-choose
+  #- type: InstantAction
+  #  event: !type:RevenantChooseCurseActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRevenantCurseIceStorm
+  name: Summon Ice Storm
+  description: Costs 50 Essence.
+  components:
+  - type: Action
+    icon:
+      sprite: _Moffstation/Actions/revenant.rsi
+      state: curse-ice-storm
+  #- type: InstantAction
+  #  event: !type:RevenantCurseIceStormActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRevenantCursePlagueRats
+  name: Summon Plague Rats
+  description: Costs 65 Essence.
+  components:
+  - type: Action
+    icon:
+      sprite: _Moffstation/Actions/revenant.rsi
+      state: curse-plague-rats
+  #- type: InstantAction
+  #  event: !type:RevenantCursePlagueRatsActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRevenantPoltergeistTrip
+  name: Poltergeist Trip People
+  description: Costs 30 Essence.
+  components:
+  - type: Action
+    icon:
+      sprite: _Moffstation/Actions/revenant.rsi
+      state: curse-proltergeist-soap
+  #- type: InstantAction
+  #  event: !type:RevenantCursePoltergeistTripActionEvent

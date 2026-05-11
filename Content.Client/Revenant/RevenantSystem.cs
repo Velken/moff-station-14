@@ -53,3 +53,4 @@ public sealed class RevenantSystem : EntitySystem
         args.Amount = ent.Comp.Essence.Int();
     }
 }
+// a

@@ -3,6 +3,8 @@ using Content.Shared.Examine;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Humanoid;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Random;
 
@@ -15,6 +17,7 @@ namespace Content.Server.Revenant.EntitySystems;
 public sealed class EssenceSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
 
     public override void Initialize()
     {
@@ -63,6 +66,24 @@ public sealed class EssenceSystem : EntitySystem
     {
         if (!TryComp<MobStateComponent>(uid, out var mob))
             return;
+
+        // Moffstation - Start - Revenant Revamp
+        // Non-humanoids have essence based on their thresholds.
+        if (!HasComp<HumanoidProfileComponent>(uid))
+        {
+            var min = 1f;
+            var max = 3f;
+
+            if (_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold))
+                min = critThreshold.Value.Float() / 10f;
+
+            if (_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold))
+                max = deadThreshold.Value.Float() / 10f;
+
+            component.EssenceAmount = _random.NextFloat(min, max);
+            return;
+        }
+        // Moffstation - End - Revenant Revamp
 
         switch (mob.CurrentState)
         {
