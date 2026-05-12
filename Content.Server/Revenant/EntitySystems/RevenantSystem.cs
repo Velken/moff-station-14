@@ -27,6 +27,7 @@ namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem : EntitySystem
 {
+    [Dependency] private readonly ActionsSystem _actions = default!; // Moffstation - revenant revamp
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
@@ -145,13 +146,27 @@ public sealed partial class RevenantSystem : EntitySystem
         return true;
     }
 
-    private bool TryUseAbility(EntityUid uid, RevenantComponent component, FixedPoint2 abilityCost, Vector2 debuffs)
+    // moffstation - start - revenant revamp
+    private bool TryUseAbility(EntityUid uid, RevenantComponent component, FixedPoint2 abilityCost, Vector2 debuffs, bool? etherealAbility = false)
     {
         if (component.Essence <= abilityCost)
         {
             _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, uid);
             return false;
         }
+
+        foreach (var (actionId, action) in _actions.GetActions(uid))
+        {
+            if (_actions.GetEvent(actionId) is RevenantToggleCorporealActionEvent)
+            {
+                if (debuffs.Y > 0)
+                    _actions.SetCooldown(actionId, TimeSpan.FromSeconds(debuffs.Y));
+                break;
+            }
+        }
+
+        if (etherealAbility == true)
+            return true;
 
         var tileref = _turf.GetTileRef(Transform(uid).Coordinates);
         if (tileref != null)
@@ -165,11 +180,19 @@ public sealed partial class RevenantSystem : EntitySystem
 
         ChangeEssenceAmount(uid, -abilityCost, component, false);
 
-        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(debuffs.Y), false);
+        if(!HasComp<CorporealComponent>(uid))
+        {
+            _statusEffects.TryAddStatusEffect<CorporealComponent>(uid,
+                "Corporeal",
+                TimeSpan.FromSeconds(debuffs.Y),
+                false);
+        }
+
         _stun.TryAddStunDuration(uid, TimeSpan.FromSeconds(debuffs.X));
 
         return true;
     }
+    // moffstation - end - revenant revamp
 
     public void MakeVisible(bool visible)
     {

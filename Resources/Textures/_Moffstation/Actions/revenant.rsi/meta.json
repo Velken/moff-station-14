@@ -18,6 +18,9 @@
     },
 	{
       "name": "curse-proltergeist-soap"
-    }
+    },
+	{
+	  "name": "toggle-corporeal"
+	}
   ]
 }

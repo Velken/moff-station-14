@@ -6,6 +6,7 @@
   name: revenant
   description: A spooky ghostie.
   components:
+  - type: MobState # Moffstation - revenant revamp (fixes revenant not being stunned after using ability)
   - type: Emag
     emagType: All
   - type: Input

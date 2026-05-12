@@ -58,6 +58,11 @@ public sealed partial class RevenantMalfunctionActionEvent : InstantActionEvent
 {
 }
 
+// moffstation - start - revenant revamp
+public sealed partial class RevenantToggleCorporealActionEvent : InstantActionEvent
+{
+}
+// moffstation - end - revenant revamp
 
 [NetSerializable, Serializable]
 public enum RevenantVisuals : byte

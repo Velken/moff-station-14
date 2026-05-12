@@ -49,3 +49,17 @@
       state: curse-proltergeist-soap
   #- type: InstantAction
   #  event: !type:RevenantCursePoltergeistTripActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRevenantBecomeCorporeal
+  name: Become Corporeal
+  description: Toggle between being ethereal and corporeal.
+  components:
+  - type: Action
+    useDelay: 30
+    icon:
+      sprite: _Moffstation/Actions/revenant.rsi
+      state: toggle-corporeal
+  - type: InstantAction
+    event: !type:RevenantToggleCorporealActionEvent

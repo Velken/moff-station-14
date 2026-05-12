@@ -1,8 +1,21 @@
 - type: listing
   id: RevenantChooseCurseForm
-  name: revenant-malfunction-name
-  description: revenant-malfunction-desc
+  name: revenant-choose-curse-form-name
+  description: revenant-choose-curse-form-desc
   productAction: ActionRevenantChooseCurseForm
+  cost:
+    StolenEssence: 50
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: RevenantBecomeCorporeal
+  name: revenant-become-corporeal-name
+  description: revenant-become-corporeal-desc
+  productAction: ActionRevenantBecomeCorporeal
   cost:
     StolenEssence: 50
   categories:

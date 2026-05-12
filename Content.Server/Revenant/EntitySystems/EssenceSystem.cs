@@ -3,8 +3,8 @@ using Content.Shared.Examine;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Humanoid;
-using Content.Shared.Mobs.Systems;
+using Content.Shared.Humanoid; // Moffstation - Revenant Revamp
+using Content.Shared.Mobs.Systems; // Moffstation - Revenant Revamp
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Random;
 
@@ -17,7 +17,7 @@ namespace Content.Server.Revenant.EntitySystems;
 public sealed class EssenceSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!; // Moffstation  - Revenant Revamp
 
     public override void Initialize()
     {

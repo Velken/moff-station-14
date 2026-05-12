@@ -26,6 +26,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Revenant.Components;
+using Content.Shared.Silicons.Laws.Components; // Moffstation  - Revenant Revamp
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 using Robust.Shared.Map.Components;
@@ -59,6 +60,7 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantToggleCorporealActionEvent>(OnToggleCorporealAction); // Moffstation - Revenant Revamp
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -77,7 +79,7 @@ public sealed partial class RevenantSystem
         }
 
         // Moffstation - Start - Revenant Revamp
-        if (!HasComp<MobStateComponent>(target) || HasComp<RevenantComponent>(target))
+        if (!HasComp<MobStateComponent>(target) || HasComp<RevenantComponent>(target) || HasComp<SiliconLawBoundComponent>(target))
             return;
         // Moffstation - End - Revenant Revamp
 
@@ -352,4 +354,29 @@ public sealed partial class RevenantSystem
             _emagSystem.TryEmagEffect(uid, uid, ent);
         }
     }
+
+    // Moffstatio - start - revenant revamp
+    private void OnToggleCorporealAction(EntityUid uid, RevenantComponent component, RevenantToggleCorporealActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryUseAbility(uid, component, component.EtherealToggleCost, component.EtherealToggleDebuffs, true))
+            return;
+
+        if (HasComp<CorporealComponent>(uid))
+        {
+            RemComp<CorporealComponent>(uid);
+            _alerts.ClearAlert(uid, component.CorporealToggleAlert);
+        }
+        else
+        {
+            AddComp<CorporealComponent>(uid);
+            _alerts.ShowAlert(uid, component.CorporealToggleAlert);
+        }
+
+        args.Handled = true;
+    }
+
+    // Moffstatio - end - revenant revamp
 }

@@ -10,3 +10,9 @@
   description: alerts-french-toggle-desc
   minSeverity: 0
   maxSeverity: 1
+
+- type: alert
+  id: CorporealToggle
+  icons: [ { sprite: /Textures/Mobs/Ghosts/revenant.rsi, state: icon } ]
+  name: alerts-revenant-corporeal-name
+  description: alerts-revenant-corporeal-desc

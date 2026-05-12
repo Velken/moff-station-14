@@ -227,4 +227,29 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 ChillUpperBound = 500;
+
+    // Moffstation - start - revenant revamp
+
+    /// <summary>
+    /// The alert prototype for Corporeal indicator.
+    /// </summary>
+    [DataField]
+    public ProtoId<AlertPrototype> CorporealToggleAlert = "CorporealToggle";
+
+
+    /// <summary>
+    /// The amount of essence that is needed to use the ability.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 EtherealToggleCost = 0;
+
+    /// <summary>
+    /// The status effects applied after the ability
+    /// the first float corresponds to amount of time the entity is stunned.
+    /// the second corresponds to the amount of time the entity is made solid.
+    /// </summary>
+    [DataField]
+    public Vector2 EtherealToggleDebuffs = new(0, 2);
+
+    // Moffstation - end - revenant revamp
 }
