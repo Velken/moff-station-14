@@ -236,7 +236,7 @@ public sealed partial class RevenantComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> CorporealToggleAlert = "CorporealToggle";
 
-
+    #region EtherealToggle
     /// <summary>
     /// The amount of essence that is needed to use the ability.
     /// </summary>
@@ -250,6 +250,23 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [DataField]
     public Vector2 EtherealToggleDebuffs = new(0, 2);
+    #endregion
+
+    #region CurseSummonIceStorm
+    /// <summary>
+    /// The amount of essence that is needed to use the ability.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 CurseSummonIceStormCost = 50;
+
+    /// <summary>
+    /// The status effects applied after the ability
+    /// the first float corresponds to amount of time the entity is stunned.
+    /// the second corresponds to the amount of time the entity is made solid.
+    /// </summary>
+    [DataField]
+    public Vector2 CurseSummonIceStormDebuffs = new(2, 8);
+    #endregion
 
     // Moffstation - end - revenant revamp
 }

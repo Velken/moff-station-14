@@ -21,8 +21,8 @@
     icon:
       sprite: _Moffstation/Actions/revenant.rsi
       state: curse-ice-storm
-  #- type: InstantAction
-  #  event: !type:RevenantCurseIceStormActionEvent
+  - type: InstantAction
+    event: !type:RevenantCurseIceStormActionEvent
 
 - type: entity
   parent: BaseAction

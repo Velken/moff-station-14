@@ -60,7 +60,11 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantToggleCorporealActionEvent>(OnToggleCorporealAction); // Moffstation - Revenant Revamp
+
+        // Moffstation - Start - Revenant Revamp
+        SubscribeLocalEvent<RevenantComponent, RevenantToggleCorporealActionEvent>(OnToggleCorporealAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantCurseIceStormActionEvent>(OnCurseSummonIceStormAction);
+        // Moffstation - End - Revenant Revamp
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -376,6 +380,18 @@ public sealed partial class RevenantSystem
         }
 
         args.Handled = true;
+    }
+
+    private void OnCurseSummonIceStormAction(EntityUid uid, RevenantComponent component, RevenantCurseIceStormActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryUseAbility(uid, component, component.CurseSummonIceStormCost, component.CurseSummonIceStormDebuffs))
+            return;
+
+
+
     }
 
     // Moffstatio - end - revenant revamp

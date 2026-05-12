@@ -62,6 +62,10 @@ public sealed partial class RevenantMalfunctionActionEvent : InstantActionEvent
 public sealed partial class RevenantToggleCorporealActionEvent : InstantActionEvent
 {
 }
+
+public sealed partial class RevenantCurseIceStormActionEvent : InstantActionEvent
+{
+}
 // moffstation - end - revenant revamp
 
 [NetSerializable, Serializable]
