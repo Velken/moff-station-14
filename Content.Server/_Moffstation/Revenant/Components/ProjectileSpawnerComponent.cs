@@ -1,18 +1,32 @@
 ﻿using System.Numerics;
+using Content.Shared.Trigger.Components.Triggers;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server._Moffstation.Revenant.Curse.Components;
+namespace Content.Server._Moffstation.Revenant.Components;
 
 [RegisterComponent]
-public sealed partial class ProjectileCurseComponent : Component
+public sealed partial class ProjectileSpawnerComponent : BaseTriggerOnXComponent
 {
     /// <summary>
     /// If the entity can shoot projectiles.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanShoot = true;
+
+    /// <summary>
+    /// If a trigger signal is sent after a successful shooting.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool SendTriggerSignal = true;
+
+    /// <summary>
+    /// The sound to play when the entity shoots projectile(s)
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier? SoundOnShoot;
 
     /// <summary>
     /// The prototype of the projectile that will spawn from the cursed object.
@@ -22,8 +36,8 @@ public sealed partial class ProjectileCurseComponent : Component
 
     /// <summary>
     /// The interval between shots.
-    /// the first float corresponds to the minimum amount of time.
-    /// the second corresponds to the maximum amount of time.
+    /// The first float corresponds to the minimum amount of time.
+    /// The second corresponds to the maximum amount of time.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Vector2 ShootInterval = new(5, 30);
@@ -49,12 +63,12 @@ public sealed partial class ProjectileCurseComponent : Component
     /// <summary>
     /// The MAXIMUM number of projectiles shot per firing.
     /// </summary>
-    [DataField("maxProjectiles"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MaxProjectiles = 3;
 
     /// <summary>
     /// The MAXIMUM range for targeting entities.
     /// </summary>
-    [DataField("projectileRange"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ProjectileRange = 50f;
 }

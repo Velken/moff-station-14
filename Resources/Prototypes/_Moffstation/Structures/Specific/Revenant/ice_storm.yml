@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: IceStormCurse
+  suffix: Revenant
   components:
   - type: Physics
     bodyType: Static
@@ -7,12 +8,7 @@
   - type: Fixtures
   - type: Sprite
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
-    layers:
-    - state: anom
-      map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
-      visible: false
+    state: anom
   - type: PointLight
     radius: 2.0
     energy: 2.5
@@ -28,34 +24,34 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: ProjectileCurse
-    projectilePrototype: ProjectileIcicle #TODO: everything bellow this line
-  - type: EntitySpawnAnomaly
+  - type: ProjectileSpawner
+    projectilePrototype: ProjectileIcicle
+    soundOnShoot: "/Audio/Effects/Weather/snowstorm_weak.ogg"
+  - type: SpawnMultipleOnTrigger
     entries:
     - settings:
-        spawnOnStabilityChanged: true
         minAmount: 5
         maxAmount: 15
         maxRange: 4
       spawns:
       - IceCrust
-  - type: TempAffectingAnomaly
-    tempChangePerSecond: -25
-    hotspotExposeTemperature: -1000
-  - type: GasProducerAnomaly
-    releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
-    releaseOnMaxSeverity: true
-    spawnRadius: 0
+  #- type: TempAffectingAnomaly
+  #  tempChangePerSecond: -25
+  #  hotspotExposeTemperature: -1000
+  #- type: GasProducerAnomaly
+  #  releasedGas: 8 # Frezon. Please replace it if there is a better way to specify this
+  #  releaseOnMaxSeverity: true
+  #  spawnRadius: 0
   - type: DamageOnInteract
     damage:
       types:
-        Cold: 10
+        Cold: 2
     popupText: anomaly-component-contact-damage
   - type: DamageOnAttacked
     damage:
       types:
-        Cold: 10
+        Cold: 2

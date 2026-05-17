@@ -63,7 +63,7 @@ public sealed partial class RevenantToggleCorporealActionEvent : InstantActionEv
 {
 }
 
-public sealed partial class RevenantCurseIceStormActionEvent : InstantActionEvent
+public sealed partial class RevenantCurseSummonIceStormActionEvent : InstantActionEvent
 {
 }
 // moffstation - end - revenant revamp

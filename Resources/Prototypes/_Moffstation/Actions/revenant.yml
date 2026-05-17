@@ -13,7 +13,7 @@
 
 - type: entity
   parent: BaseAction
-  id: ActionRevenantCurseIceStorm
+  id: ActionRevenantCurseSummonIceStorm
   name: Summon Ice Storm
   description: Costs 50 Essence.
   components:
@@ -22,7 +22,7 @@
       sprite: _Moffstation/Actions/revenant.rsi
       state: curse-ice-storm
   - type: InstantAction
-    event: !type:RevenantCurseIceStormActionEvent
+    event: !type:RevenantCurseSummonIceStormActionEvent
 
 - type: entity
   parent: BaseAction

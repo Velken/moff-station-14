@@ -1,21 +1,24 @@
 ﻿using System.Numerics;
-using Content.Server._Moffstation.Revenant.Curse.Components;
+using Content.Server._Moffstation.Revenant.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
+using Content.Shared.Trigger.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server._Moffstation.Revenant.Curse.Systems;
+namespace Content.Server._Moffstation.Revenant.Systems;
 
 //TODO: DOCUMENT STUFF
 
 /// <summary>
-/// This handles <see cref="ProjectileCurseComponent"/>.
+/// This handles <see cref="Components.ProjectileSpawnerComponent"/>.
 /// </summary>
-public sealed class ProjectileCurseSystem : EntitySystem
+public sealed class ProjectileSpawnerSystem : EntitySystem
 {
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -24,6 +27,8 @@ public sealed class ProjectileCurseSystem : EntitySystem
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly TriggerSystem _trigger = default!;
 
     private EntityQuery<TransformComponent> _xFormQuery;
     private EntityQuery<MobStateComponent> _mobQuery;
@@ -41,7 +46,7 @@ public sealed class ProjectileCurseSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ProjectileCurseComponent>();
+        var query = EntityQueryEnumerator<ProjectileSpawnerComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.NextShootTime > _gameTiming.CurTime)
@@ -54,10 +59,15 @@ public sealed class ProjectileCurseSystem : EntitySystem
         }
     }
 
-    private void ShootProjectilesAtEntities(EntityUid uid, ProjectileCurseComponent component)
+    private void ShootProjectilesAtEntities(EntityUid uid, ProjectileSpawnerComponent component)
     {
         if(!component.CanShoot)
             return;
+
+        if (component.SendTriggerSignal)
+        {
+            _trigger.Trigger(uid, key: component.KeyOut);
+        }
 
         var projectileCount = _random.Next(component.MinProjectiles, component.MaxProjectiles + 1);
 
@@ -97,7 +107,7 @@ public sealed class ProjectileCurseSystem : EntitySystem
 
     private void ShootProjectile(
         EntityUid uid,
-        ProjectileCurseComponent component,
+        Components.ProjectileSpawnerComponent component,
         EntityCoordinates coords,
         EntityCoordinates targetCoords
     )
@@ -111,8 +121,11 @@ public sealed class ProjectileCurseSystem : EntitySystem
         var ent = Spawn(component.ProjectilePrototype, spawnCoords);
         var direction = _xform.ToMapCoordinates(targetCoords).Position - mapPos.Position;
 
-        if (!TryComp<ProjectileComponent>(ent, out var comp))
+        if (!TryComp<ProjectileComponent>(ent, out _))
             return;
+
+        if (component.SoundOnShoot != null)
+            _audioSystem.PlayPvs(component.SoundOnShoot, uid, AudioParams.Default.WithVolume(-3));
 
         _gunSystem.ShootProjectile(ent, direction, Vector2.Zero, uid, uid, component.ProjectileSpeed);
     }

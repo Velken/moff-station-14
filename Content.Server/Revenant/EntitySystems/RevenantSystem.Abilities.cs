@@ -63,7 +63,7 @@ public sealed partial class RevenantSystem
 
         // Moffstation - Start - Revenant Revamp
         SubscribeLocalEvent<RevenantComponent, RevenantToggleCorporealActionEvent>(OnToggleCorporealAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantCurseIceStormActionEvent>(OnCurseSummonIceStormAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantCurseSummonIceStormActionEvent>(OnCurseSummonIceStormAction);
         // Moffstation - End - Revenant Revamp
     }
 
@@ -382,7 +382,7 @@ public sealed partial class RevenantSystem
         args.Handled = true;
     }
 
-    private void OnCurseSummonIceStormAction(EntityUid uid, RevenantComponent component, RevenantCurseIceStormActionEvent args)
+    private void OnCurseSummonIceStormAction(EntityUid uid, RevenantComponent component, RevenantCurseSummonIceStormActionEvent args)
     {
         if (args.Handled)
             return;
