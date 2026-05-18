@@ -38,8 +38,19 @@ public sealed class ProjectileSpawnerSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
         _xFormQuery = GetEntityQuery<TransformComponent>();
         _mobQuery = GetEntityQuery<MobStateComponent>();
+
+        SubscribeLocalEvent<ProjectileSpawnerComponent, ComponentInit>(OnComponentInit);
+    }
+
+    private void OnComponentInit(EntityUid uid, ProjectileSpawnerComponent component, ComponentInit args)
+    {
+        if (component.NextShootTime != TimeSpan.Zero)
+            return;
+
+        component.NextShootTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.ShootInterval.X, component.ShootInterval.Y));
     }
 
     public override void Update(float frameTime)
@@ -107,7 +118,7 @@ public sealed class ProjectileSpawnerSystem : EntitySystem
 
     private void ShootProjectile(
         EntityUid uid,
-        Components.ProjectileSpawnerComponent component,
+        ProjectileSpawnerComponent component,
         EntityCoordinates coords,
         EntityCoordinates targetCoords
     )

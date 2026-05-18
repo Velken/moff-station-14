@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Numerics;
-using Content.Server._Moffstation.Revenant.Components;
-using Content.Shared.Anomaly;
-using Content.Shared.Anomaly.Components;
+using Content.Shared._Moffstation.Revenant.Components;
+using Content.Shared._Moffstation.Revenant.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Trigger;
 using Robust.Shared.Map;
@@ -13,7 +12,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server._Moffstation.Revenant.Systems;
 
-public sealed class SpawnMultipleOnTriggerSystem : XOnTriggerSystem<SpawnMultipleOnTriggerComponent>
+public sealed class SpawnMultipleOnTriggerSystem : SharedSpawnMultipleOnTriggerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -21,27 +20,10 @@ public sealed class SpawnMultipleOnTriggerSystem : XOnTriggerSystem<SpawnMultipl
 
     [Dependency] private readonly EntityQuery<PhysicsComponent> _physQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SpawnMultipleOnTriggerComponent, AnomalyShutdownEvent>(OnShutdown);
-    }
 
     protected override void OnTrigger(Entity<SpawnMultipleOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
         SpawnEntities(ent);
-    }
-
-    private void OnShutdown(Entity<SpawnMultipleOnTriggerComponent> component, ref AnomalyShutdownEvent args)
-    {
-        foreach (var entry in component.Comp.Entries)
-        {
-            if (!entry.Settings.SpawnOnShutdown || args.Supercritical)
-                continue;
-
-            SpawnEntities(component, entry, 1);
-        }
     }
 
     private void SpawnEntities(Entity<SpawnMultipleOnTriggerComponent> component)
@@ -145,39 +127,4 @@ public sealed class SpawnMultipleOnTriggerSystem : XOnTriggerSystem<SpawnMultipl
         return resultList;
     }
 
-}
-
-[DataRecord]
-public partial record struct MultipleSpawnSettings()
-{
-    /// <summary>
-    /// should entities block spawning?
-    /// </summary>
-    public bool CanSpawnOnEntities { get; set; } = false;
-
-    /// <summary>
-    /// The minimum number of entities that spawn per pulse
-    /// </summary>
-    public int MinAmount { get; set; } = 0;
-
-    /// <summary>
-    /// The maximum number of entities that spawn per pulse
-    /// scales with severity.
-    /// </summary>
-    public int MaxAmount { get; set; } = 1;
-
-    /// <summary>
-    /// The distance from the anomaly in which the entities will not appear
-    /// </summary>
-    public float MinRange { get; set; } = 0f;
-
-    /// <summary>
-    /// The maximum radius the entities will spawn in.
-    /// </summary>
-    public float MaxRange { get; set; } = 1f;
-
-    /// <summary>
-    /// Whether or not anomaly spawns entities when destroyed
-    /// </summary>
-    public bool SpawnOnShutdown { get; set; } = false;
 }
