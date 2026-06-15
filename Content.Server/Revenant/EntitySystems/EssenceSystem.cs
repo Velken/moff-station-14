@@ -14,10 +14,10 @@ namespace Content.Server.Revenant.EntitySystems;
 /// Attached to entities when a revenant drains them in order to
 /// manage their essence.
 /// </summary>
-public sealed class EssenceSystem : EntitySystem
+public sealed partial class EssenceSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!; // Moffstation  - Revenant Revamp
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MobThresholdSystem _mobThresholdSystem = default!; // Moffstation  - Revenant Revamp
 
     public override void Initialize()
     {

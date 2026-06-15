@@ -15,6 +15,7 @@
   loadouts:
   - PersonalItemAdelineTurtleneck
   - PersonalItemAineBeret
+  - PersonalItemAliceCaholicFlask
   - PersonalItemAllSaintsDayCrook
   - PersonalItemAnatolyGown
   - PersonalItemAngelPiano
@@ -24,9 +25,14 @@
   - PersonalItemAzumeGuitar
   - PersonalItemBintendoHat
   - PersonalItemBoxcarGlasses
+  - PersonalItemBuckJusticeHat
   - PersonalItemCamillaRing
+  - PersonalItemCandiceClownMask
+  - PersonalItemCandicePirateHat
   - PersonalItemCarolynFlettCigsPack
   - PersonalItemCatCard
+  - PersonalItemChadsChants
+  - PersonalItemChelsiCodex
   - PersonalItemCinnabarMask
   - PersonalItemCooksEnvelope
   - PersonalItemCooksPlushie
@@ -42,6 +48,7 @@
   - PersonalItemFrostMedicalWebbing
   - PersonalItemGhostwoodCoat
   - PersonalItemGigsShaker
+  - PersonalItemGristleMcThornbodyDogtags
   - PersonalItemGumboSlippers
   - PersonalItemHercynSuit
   - PersonalItemHotSauceFireExtinguisher
@@ -49,6 +56,8 @@
   - PersonalItemIoImplanter
   - PersonalItemIrisRing
   - PersonalItemJaceFinlayMask
+  - PersonalItemJamesRobyHat
+  - PersonalItemJeiDogtags
   - PersonalItemJessMask
   - PersonalItemJibberPistol
   - PersonalItemJulieFavOutfit
@@ -72,8 +81,10 @@
   - PersonalItemPeedeeAvatar
   - PersonalItemPeriwinkleFace
   - PersonalItemPilkmanPlushie
+  - PersonalItemPlastiPicture
   - PersonalItemPlentJacket
   - PersonalItemRemiaPin
+  - PersonalItemReneePlanetaryPasscard
   - PersonalItemRoseHeadphones
   - PersonalItemRufflerMask
   - PersonalItemRykerPen
